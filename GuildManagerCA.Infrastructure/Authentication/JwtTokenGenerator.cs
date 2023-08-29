@@ -1,5 +1,6 @@
 ﻿using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Application.Common.Services;
+using GuildManagerCA.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -23,7 +24,7 @@ namespace GuildManagerCA.Infrastructure.Authentication
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string GenerateToken(Guid userId, string firstName, string lastName)
+        public string GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(
@@ -31,9 +32,9 @@ namespace GuildManagerCA.Infrastructure.Authentication
                 SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.GivenName, firstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName, lastName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

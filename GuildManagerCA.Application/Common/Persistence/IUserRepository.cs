@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Application.Common.Authentication
+namespace GuildManagerCA.Application.Common.Persistence
 {
-    public interface IJwtTokenGenerator
+    public interface IUserRepository
     {
-        string GenerateToken(User user);
+        void Add(User user);
+        User? GetUserByEmail(string email);
     }
 }
