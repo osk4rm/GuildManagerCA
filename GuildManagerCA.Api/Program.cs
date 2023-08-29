@@ -1,6 +1,4 @@
-using GuildManagerCA.Api.Errors;
-using GuildManagerCA.Api.Filters;
-using GuildManagerCA.Api.Middleware;
+using GuildManagerCA.Api.Common.Errors;
 using GuildManagerCA.Application;
 using GuildManagerCA.Application.Services.Authentication;
 using GuildManagerCA.Infrastructure;
@@ -14,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
         .RegisterApplication()
         .RegisterInfrastructure(builder.Configuration);
 
-    //builder.Services.AddControllers( opts => opts.Filters.Add<ErrorHandlingFilterAttribute>());
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -25,7 +22,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    //app.UseMiddleware<ErrorHandlingMiddleware>();
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ErrorOr;
+using GuildManagerCA.Api.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace GuildManagerCA.Api.Errors
+namespace GuildManagerCA.Api.Common.Errors
 {
     public class CustomProblemDetailsFactory : ProblemDetailsFactory
     {
@@ -67,7 +69,12 @@ namespace GuildManagerCA.Api.Errors
                 problemDetails.Extensions["traceId"] = traceId;
             }
 
-            problemDetails.Extensions.Add("customProperty", "customValue");
+            var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+            if(errors is not null)
+            {
+                problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
+            }
+            
         }
     }
 }
