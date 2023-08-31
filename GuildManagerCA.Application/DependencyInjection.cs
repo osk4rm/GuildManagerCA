@@ -5,6 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using GuildManagerCA.Application.Authentication.Commands.Register;
+using GuildManagerCA.Application.Authentication.Common;
+using GuildManagerCA.Application.Common.Behaviors;
+using ErrorOr;
+using FluentValidation;
+using System.Reflection;
 
 namespace GuildManagerCA.Application
 {
@@ -16,8 +22,9 @@ namespace GuildManagerCA.Application
             {
                 cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
             });
-                
-            
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             return services;
         }
