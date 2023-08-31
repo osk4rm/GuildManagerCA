@@ -16,7 +16,7 @@ namespace GuildManagerCA.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
