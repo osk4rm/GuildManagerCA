@@ -1,6 +1,5 @@
 using GuildManagerCA.Api.Common.Errors;
 using GuildManagerCA.Application;
-using GuildManagerCA.Application.Services.Authentication;
 using GuildManagerCA.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.OpenApi.Models;

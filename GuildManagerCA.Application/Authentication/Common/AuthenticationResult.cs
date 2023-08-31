@@ -5,10 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Application.Services.Authentication
+namespace GuildManagerCA.Application.Authentication.Common
 {
-    public record AuthenticationResult(
-        User User,
-        string Token);
-
+    public record AuthenticationResult(User User, string Token);
 }
