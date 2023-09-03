@@ -5,12 +5,14 @@ using GuildManagerCA.Application.Authentication.Queries.Login;
 using GuildManagerCA.Contracts.Authentication;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerCA.Api.Controllers
 {
     [Route("api/auth")]
+    [AllowAnonymous]
     public class AuthenticationController : ApiController
     {
         private readonly ISender _mediator;
