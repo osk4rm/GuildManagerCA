@@ -1,1 +1,3 @@
 # GuildManagerCA
+
+*WORK IN PROGRESS*
