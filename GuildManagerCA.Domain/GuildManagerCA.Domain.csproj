@@ -10,10 +10,4 @@
     <PackageReference Include="ErrorOr" Version="1.2.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CharacterAggregate\" />
-    <Folder Include="RaidEventAttendanceAggregate\" />
-    <Folder Include="RaidEventAggregate\" />
-  </ItemGroup>
-
 </Project>
