@@ -1,6 +1,7 @@
 ﻿using GuildManagerCA.Domain.Common.Models;
 using GuildManagerCA.Domain.User.Entities;
-using GuildManagerCA.Domain.User.ValueObjects;
+using GuildManagerCA.Domain.UserAggregate.ValueObjects;
+using GuildManagerCA.Domain.UserRoleAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,21 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.User
+namespace GuildManagerCA.Domain.UserAggregate
 {
     public sealed class User : AggregateRoot<UserId>
     {
-        private readonly List<Role> _roles = new();
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Nickname { get; private set; }
+        public string Email { get; private set; }
+        public string Password { get; private set; }
+        public DateTime CreatedDateTime { get; private set; }
+        public DateTime UpdatedDateTime { get; private set; }
+        public UserRoleId UserRoleId { get; private set; }
 
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Nickname { get; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime UpdatedDateTime { get; set; }
-
-        public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
 
         private User(
             string firstName,
@@ -32,6 +31,7 @@ namespace GuildManagerCA.Domain.User
             string password,
             DateTime createdDateTime,
             DateTime updatedDateTime,
+            UserRoleId userRoleId,
             UserId? id = null
             ) : base(id ?? UserId.CreateUnique())
         {
@@ -42,6 +42,7 @@ namespace GuildManagerCA.Domain.User
             Password = password;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
+            UserRoleId = userRoleId;
         }
 
         public static User Create(
@@ -51,7 +52,8 @@ namespace GuildManagerCA.Domain.User
             string email,
             string password,
             DateTime createdDateTime,
-            DateTime updatedDateTime)
+            DateTime updatedDateTime,
+            UserRoleId userRoleId)
         {
             return new(
                 firstName,
@@ -60,7 +62,8 @@ namespace GuildManagerCA.Domain.User
                 email,
                 password,
                 createdDateTime,
-                updatedDateTime);
+                updatedDateTime,
+                userRoleId);
         }
 
 

@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.CharacterClass.ValueObjects
+namespace GuildManagerCA.Domain.SpecializationAggregate.ValueObjects
 {
-    public class CharacterClassId : ValueObject
+    public class SpecializationId : ValueObject
     {
-        public Guid Value { get; private set; }
+        public Guid Value { get; }
 
-        private CharacterClassId(Guid value)
+        private SpecializationId(Guid value)
         {
             Value = value;
         }
 
-        public static CharacterClassId CreateUnique() => new(Guid.NewGuid());
+        public static SpecializationId CreateUnique() => new(Guid.NewGuid());
 
         public override IEnumerable<object> GetEqualityComponents()
         {

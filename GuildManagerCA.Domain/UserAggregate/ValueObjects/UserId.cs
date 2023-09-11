@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.User.ValueObjects
+namespace GuildManagerCA.Domain.UserAggregate.ValueObjects
 {
     public sealed class UserId : ValueObject
     {

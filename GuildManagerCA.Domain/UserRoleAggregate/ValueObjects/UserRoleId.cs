@@ -1,21 +1,24 @@
 ﻿using GuildManagerCA.Domain.Common.Models;
+using GuildManagerCA.Domain.UserAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.CharacterClass.ValueObjects
+namespace GuildManagerCA.Domain.UserRoleAggregate.ValueObjects
 {
-    public class ClassSpecializationId : ValueObject
+    public sealed class UserRoleId : ValueObject
     {
-        public Guid Value { get; private set; }
-        private ClassSpecializationId(Guid value)
+        public Guid Value { get; }
+
+        private UserRoleId(Guid value)
         {
             Value = value;
         }
 
-        public static ClassSpecializationId CreateUnique() => new(Guid.NewGuid());
+        public static UserRoleId CreateUnique() => new(Guid.NewGuid());
+
         public override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;

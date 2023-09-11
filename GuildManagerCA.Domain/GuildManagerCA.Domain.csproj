@@ -11,8 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Character\" />
-    <Folder Include="RaidEvent\" />
+    <Folder Include="CharacterAggregate\" />
+    <Folder Include="RaidLocationAggregate\" />
+    <Folder Include="RaidEventAttendanceAggregate\" />
+    <Folder Include="RaidEventAggregate\" />
   </ItemGroup>
 
 </Project>

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.CharacterClass.Enums
+namespace GuildManagerCA.Domain.SpecializationAggregate.Enum
 {
     public enum SpecializationRole
     {
         Tank,
         Healer,
-        Ranged_DPS,
-        Melee_DPS
+        MeleeDPS,
+        RangedDPS,
+        Hybrid
     }
 }
