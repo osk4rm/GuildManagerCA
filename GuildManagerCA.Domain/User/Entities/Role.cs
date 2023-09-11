@@ -13,7 +13,7 @@ namespace GuildManagerCA.Domain.User.Entities
         public string Name { get; }
         public string Description { get; }
 
-        private Role(RoleId id, string name, string description) : base(id)
+        private Role(string name, string description) : base(RoleId.CreateUnique())
         {
             Name = name;
             Description = description;
@@ -21,7 +21,7 @@ namespace GuildManagerCA.Domain.User.Entities
 
         public static Role Create(string name, string description)
         {
-            return new(RoleId.CreateUnique(), name, description);
+            return new(name, description);
         }
     }
 }

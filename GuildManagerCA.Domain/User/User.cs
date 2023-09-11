@@ -24,15 +24,16 @@ namespace GuildManagerCA.Domain.User
 
         public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
 
-        private User(UserId id,
+        private User(
             string firstName,
             string lastName,
             string nickName,
             string email,
             string password,
             DateTime createdDateTime,
-            DateTime updatedDateTime
-            ) : base(id)
+            DateTime updatedDateTime,
+            UserId? id = null
+            ) : base(id ?? UserId.CreateUnique())
         {
             FirstName = firstName;
             LastName = lastName;
@@ -53,7 +54,6 @@ namespace GuildManagerCA.Domain.User
             DateTime updatedDateTime)
         {
             return new(
-                UserId.CreateUnique(),
                 firstName,
                 lastName,
                 nickName,
