@@ -1,5 +1,4 @@
 ﻿using GuildManagerCA.Domain.Common.Models;
-using GuildManagerCA.Domain.User.Entities;
 using GuildManagerCA.Domain.UserAggregate.ValueObjects;
 using GuildManagerCA.Domain.UserRoleAggregate.ValueObjects;
 using System;
