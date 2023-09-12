@@ -3,8 +3,10 @@ using GuildManagerCA.Application.Common.Persistence;
 using GuildManagerCA.Application.Common.Services;
 using GuildManagerCA.Infrastructure.Authentication;
 using GuildManagerCA.Infrastructure.Persistence;
+using GuildManagerCA.Infrastructure.Persistence.Repositories;
 using GuildManagerCA.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -23,6 +25,20 @@ public static class DependencyInjection
     {
         services.AddAuth(configuration);
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddPersistence(configuration);
+
+
+        return services;
+    }
+
+    private static IServiceCollection AddPersistence(this IServiceCollection services, ConfigurationManager configuration)
+    {
+        var connectionString = configuration.GetConnectionString("Default");
+
+        services.AddDbContext<GuildManagerDbContext>(options =>
+        {
+            options.UseSqlServer(connectionString!);
+        });
 
         services.AddScoped<IUserRepository, UserRepository>();
 
