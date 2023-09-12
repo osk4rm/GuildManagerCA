@@ -45,5 +45,8 @@ namespace GuildManagerCA.Domain.CharacterAggregate
         {
             return new Character(name, itemLevel, userId, specializationIds);
         }
+#pragma warning disable CS8618
+        private Character() { }
+#pragma warning restore CS8618
     }
 }

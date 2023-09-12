@@ -17,6 +17,7 @@ namespace GuildManagerCA.Domain.UserAggregate.ValueObjects
         }
 
         public static UserId CreateUnique() => new(Guid.NewGuid());
+        public static UserId Create(Guid value) => new(value);
 
         public override IEnumerable<object> GetEqualityComponents()
         {

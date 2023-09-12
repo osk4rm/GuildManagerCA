@@ -33,5 +33,9 @@ namespace GuildManagerCA.Domain.RaidLocationAggregate
         {
             return new RaidLocation(name, expansion, imageUrl);
         }
+
+#pragma warning disable CS8618
+        private RaidLocation() { }
+#pragma warning restore CS8618
     }
 }

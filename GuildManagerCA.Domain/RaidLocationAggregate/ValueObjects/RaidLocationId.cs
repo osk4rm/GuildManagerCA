@@ -10,17 +10,20 @@ namespace GuildManagerCA.Domain.RaidLocationAggregate.ValueObjects
     public class RaidLocationId : ValueObject
     {
         public Guid Value { get; }
-
-        public RaidLocationId(Guid value)
+        private RaidLocationId(Guid value) //: base(value)
         {
             Value = value;
         }
 
         public static RaidLocationId CreateUnique() => new(Guid.NewGuid());
+        public static RaidLocationId Create(Guid value) => new(value);
 
         public override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Value;
+            throw new NotImplementedException();
         }
+#pragma warning disable CS8618
+        private RaidLocationId() { }
+#pragma warning restore CS8618
     }
 }

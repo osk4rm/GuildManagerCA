@@ -42,5 +42,9 @@ namespace GuildManagerCA.Domain.SpecializationAggregate
         {
             return new Specialization(name, imageUrl, specializationRole, characterClass, isActive);
         }
+
+#pragma warning disable CS8618
+        private Specialization() { }
+#pragma warning restore CS8618
     }
 }

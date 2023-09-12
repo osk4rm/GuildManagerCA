@@ -17,6 +17,7 @@ namespace GuildManagerCA.Domain.RaidEventAggregate.ValueObjects
         }
 
         public static CommentId CreateUnique() => new(Guid.NewGuid());
+        public static CommentId Create(Guid value) => new(value);
 
         public override IEnumerable<object> GetEqualityComponents()
         {

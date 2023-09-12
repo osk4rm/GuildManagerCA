@@ -65,6 +65,8 @@ namespace GuildManagerCA.Domain.UserAggregate
                 userRoleId);
         }
 
-
+#pragma warning disable CS8618
+        private User() { }
+#pragma warning restore CS8618
     }
 }

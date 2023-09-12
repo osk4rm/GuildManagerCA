@@ -18,5 +18,9 @@ namespace GuildManagerCA.Domain.UserRoleAggregate
         }
 
         public static UserRole Create(string name) => new(name);
+
+#pragma warning disable CS8618
+        private UserRole() { }
+#pragma warning restore CS8618
     }
 }

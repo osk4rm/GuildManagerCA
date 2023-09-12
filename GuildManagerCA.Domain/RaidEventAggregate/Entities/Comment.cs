@@ -33,5 +33,8 @@ namespace GuildManagerCA.Domain.RaidEventAggregate.Entities
         {
             return new Comment(userId, message);
         }
+#pragma warning disable CS8618
+        private Comment() { }
+#pragma warning restore CS8618
     }
 }

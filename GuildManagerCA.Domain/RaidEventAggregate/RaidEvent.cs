@@ -1,7 +1,7 @@
 ﻿using GuildManagerCA.Domain.Common.Models;
+using GuildManagerCA.Domain.RaidEventAggregate.Entities;
 using GuildManagerCA.Domain.RaidEventAggregate.Enum;
 using GuildManagerCA.Domain.RaidEventAggregate.ValueObjects;
-using GuildManagerCA.Domain.RaidEventAttendanceAggregate.ValueObjects;
 using GuildManagerCA.Domain.RaidLocationAggregate.ValueObjects;
 using GuildManagerCA.Domain.UserAggregate.ValueObjects;
 using System;
@@ -14,8 +14,8 @@ namespace GuildManagerCA.Domain.RaidEventAggregate
 {
     public class RaidEvent : AggregateRoot<RaidEventId>
     {
-        private readonly List<RaidEventAttendanceId> _raidEventAttendanceIds = new();
-        private readonly List<CommentId> _commentsIds = new();
+        private readonly List<RaidEventAttendance> _raidEventAttendances = new();
+        private readonly List<Comment> _comments = new();
 
         public RaidLocationId RaidLocationId { get; private set; }
         public DateTime StartDateTime { get; private set; }
@@ -26,8 +26,8 @@ namespace GuildManagerCA.Domain.RaidEventAggregate
         public RaidDifficulty Difficulty { get; private set; }
         public RaidEventStatus Status { get; private set; }
 
-        public IReadOnlyList<RaidEventAttendanceId> Attendances => _raidEventAttendanceIds.AsReadOnly();
-        public IReadOnlyList<CommentId> Comments => _commentsIds.AsReadOnly();
+        public IReadOnlyList<RaidEventAttendance> Attendances => _raidEventAttendances.AsReadOnly();
+        public IReadOnlyList<Comment> Comments => _comments.AsReadOnly();
 
         private RaidEvent(
             RaidLocationId raidLocationId,
@@ -61,5 +61,9 @@ namespace GuildManagerCA.Domain.RaidEventAggregate
         {
             return new RaidEvent(raidLocationId, startDateTime, endDateTime, autoAccept, hostId, raidDifficulty, description);
         }
+
+#pragma warning disable CS8618
+        private RaidEvent() { }
+#pragma warning restore CS8618
     }
 }

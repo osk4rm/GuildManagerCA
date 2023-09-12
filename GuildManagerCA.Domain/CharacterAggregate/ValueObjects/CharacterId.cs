@@ -17,6 +17,7 @@ namespace GuildManagerCA.Domain.CharacterAggregate.ValueObjects
         }
 
         public static CharacterId CreateUnique() => new(Guid.NewGuid());
+        public static CharacterId Create(Guid value) => new(value);
 
         public override IEnumerable<object> GetEqualityComponents()
         {
