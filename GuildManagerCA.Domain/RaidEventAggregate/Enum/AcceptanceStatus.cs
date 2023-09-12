@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.RaidEventAttendanceAggregate.Enum
+namespace GuildManagerCA.Domain.RaidEventAggregate.Enum
 {
     public enum AcceptanceStatus
     {
