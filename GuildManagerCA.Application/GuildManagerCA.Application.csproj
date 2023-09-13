@@ -17,4 +17,9 @@
     <ProjectReference Include="..\GuildManagerCA.Domain\GuildManagerCA.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Characters\Commands\" />
+    <Folder Include="Characters\Queries\" />
+  </ItemGroup>
+
 </Project>

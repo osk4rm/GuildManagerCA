@@ -1,4 +1,5 @@
-﻿using GuildManagerCA.Domain.CharacterAggregate.ValueObjects;
+﻿using GuildManagerCA.Domain.CharacterAggregate.Events;
+using GuildManagerCA.Domain.CharacterAggregate.ValueObjects;
 using GuildManagerCA.Domain.Common.Models;
 using GuildManagerCA.Domain.RaidEventAggregate.ValueObjects;
 using GuildManagerCA.Domain.SpecializationAggregate.ValueObjects;
@@ -43,8 +44,12 @@ namespace GuildManagerCA.Domain.CharacterAggregate
             List<SpecializationId> specializationIds
             )
         {
-            return new Character(name, itemLevel, userId, specializationIds);
+            var character = new Character(name, itemLevel, userId, specializationIds);
+            character.AddDomainEvent(new CharacterCreated(character));
+            return character;
         }
+
+        
 #pragma warning disable CS8618
         private Character() { }
 #pragma warning restore CS8618

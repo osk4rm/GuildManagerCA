@@ -1,0 +1,57 @@
+﻿using GuildManagerCA.Domain.Common.Models.DomainEvents;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GuildManagerCA.Infrastructure.Persistence.Interceptors
+{
+    public class PublishDomainEventsInterceptor : SaveChangesInterceptor
+    {
+        private readonly IPublisher _mediator;
+
+        public PublishDomainEventsInterceptor(IPublisher mediator)
+        {
+            _mediator = mediator;
+        }
+
+        public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
+        {
+            //THIS THROWS AN EXCEPTION BECAUSE ALL CHANGES SHOULD BE SAVED ASYNCHRONOUSLY
+            throw new NotImplementedException();
+        }
+
+        public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            await PublishComainEvents(eventData.Context);
+
+            return await base.SavingChangesAsync(eventData, result, cancellationToken);
+        }
+
+        private async Task PublishComainEvents(DbContext? dbContext)
+        {
+            if(dbContext is null)
+            {
+                return;
+            }
+
+            var entitiesWithDomainEvents = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
+                .Where(entry => entry.Entity.DomainEvents.Any())
+                .Select(entry => entry.Entity)
+                .ToList();
+
+            var domainEvents = entitiesWithDomainEvents.SelectMany(entry => entry.DomainEvents).ToList();
+
+            entitiesWithDomainEvents.ForEach(entity => entity.ClearDomainEvents());
+
+            foreach(var domainEvent in domainEvents)
+            {
+                await _mediator.Publish(domainEvent);
+            }
+        }
+    }
+}

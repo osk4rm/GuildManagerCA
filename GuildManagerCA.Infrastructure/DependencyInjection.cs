@@ -3,6 +3,7 @@ using GuildManagerCA.Application.Common.Persistence;
 using GuildManagerCA.Application.Common.Services;
 using GuildManagerCA.Infrastructure.Authentication;
 using GuildManagerCA.Infrastructure.Persistence;
+using GuildManagerCA.Infrastructure.Persistence.Interceptors;
 using GuildManagerCA.Infrastructure.Persistence.Repositories;
 using GuildManagerCA.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,6 +41,7 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString!);
         });
 
+        services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
