@@ -7,20 +7,15 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.SpecializationAggregate.ValueObjects
 {
-    public class SpecializationId : ValueObject
+    public class SpecializationId : AggregateRootId<Guid>
     {
-        public Guid Value { get; }
 
-        private SpecializationId(Guid value)
+        private SpecializationId(Guid value) : base(value)
         {
-            Value = value;
         }
 
         public static SpecializationId CreateUnique() => new(Guid.NewGuid());
+        public static SpecializationId Create(Guid value) => new(value);
 
-        public override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
     }
 }

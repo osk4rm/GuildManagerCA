@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.CharacterAggregate
 {
-    public class Character : AggregateRoot<CharacterId>
+    public class Character : AggregateRoot<CharacterId, Guid>
     {
         private readonly List<RaidEventId> _raidEventIds = new();
         private readonly List<SpecializationId> _specializationIds = new();

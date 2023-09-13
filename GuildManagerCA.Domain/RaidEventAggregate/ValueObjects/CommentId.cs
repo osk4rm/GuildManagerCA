@@ -7,21 +7,14 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.RaidEventAggregate.ValueObjects
 {
-    public class CommentId : ValueObject
+    public class CommentId : EntityId<Guid>
     {
-        public Guid Value { get; }
-
-        private CommentId(Guid value)
+        private CommentId(Guid value) : base(value)
         {
-            Value = value;
         }
 
         public static CommentId CreateUnique() => new(Guid.NewGuid());
         public static CommentId Create(Guid value) => new(value);
 
-        public override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
     }
 }

@@ -7,21 +7,14 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.CharacterAggregate.ValueObjects
 {
-    public class CharacterId : ValueObject
+    public class CharacterId : AggregateRootId<Guid>
     {
-        public Guid Value { get; }
-
-        private CharacterId(Guid value)
+        private CharacterId(Guid value) : base(value)
         {
-            Value = value;
         }
 
         public static CharacterId CreateUnique() => new(Guid.NewGuid());
         public static CharacterId Create(Guid value) => new(value);
 
-        public override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
     }
 }

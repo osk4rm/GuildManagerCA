@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.RaidEventAggregate
 {
-    public class RaidEvent : AggregateRoot<RaidEventId>
+    public class RaidEvent : AggregateRoot<RaidEventId, Guid>
     {
         private readonly List<RaidEventAttendance> _raidEventAttendances = new();
         private readonly List<Comment> _comments = new();

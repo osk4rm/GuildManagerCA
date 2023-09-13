@@ -8,20 +8,15 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.UserRoleAggregate.ValueObjects
 {
-    public sealed class UserRoleId : ValueObject
+    public sealed class UserRoleId : AggregateRootId<Guid>
     {
-        public Guid Value { get; }
 
-        private UserRoleId(Guid value)
+        private UserRoleId(Guid value) : base(value)
         {
-            Value = value;
         }
 
         public static UserRoleId CreateUnique() => new(Guid.NewGuid());
+        public static UserRoleId Create(Guid value) => new(value);
 
-        public override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Value;
-        }
     }
 }

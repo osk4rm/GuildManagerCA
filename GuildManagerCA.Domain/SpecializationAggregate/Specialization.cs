@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.SpecializationAggregate
 {
-    public class Specialization : AggregateRoot<SpecializationId>
+    public class Specialization : AggregateRoot<SpecializationId, Guid>
     {
         public string Name { get; private set; }
         public Uri ImageUrl { get; private set; }

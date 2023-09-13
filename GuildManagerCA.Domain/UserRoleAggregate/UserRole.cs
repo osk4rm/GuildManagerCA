@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.UserRoleAggregate
 {
-    public sealed class UserRole : AggregateRoot<UserRoleId>
+    public sealed class UserRole : AggregateRoot<UserRoleId, Guid>
     {
         public string Name { get; private set; }
 

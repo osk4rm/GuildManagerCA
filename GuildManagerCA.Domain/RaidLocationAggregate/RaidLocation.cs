@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.RaidLocationAggregate
 {
-    public class RaidLocation : AggregateRoot<RaidLocationId>
+    public class RaidLocation : AggregateRoot<RaidLocationId, Guid>
     {
         public string Name { get; private set; }
         public RaidExpansion Expansion { get; private set; }
