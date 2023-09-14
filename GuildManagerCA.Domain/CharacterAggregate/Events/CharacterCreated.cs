@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Domain.CharacterAggregate.Events
 {
-    public record CharacterCreated(Character character) : IDomainEvent
+    public record CharacterCreated(Character Character) : IDomainEvent
     {
     }
 }

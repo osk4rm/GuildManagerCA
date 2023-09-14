@@ -13,7 +13,7 @@ namespace GuildManagerCA.Application.Characters.Events
         public Task Handle(CharacterCreated notification, CancellationToken cancellationToken)
         {
             //TODO add handler logic
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }
