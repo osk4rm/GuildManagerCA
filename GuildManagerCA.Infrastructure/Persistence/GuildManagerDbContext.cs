@@ -1,5 +1,8 @@
-﻿using GuildManagerCA.Domain.Common.Models.DomainEvents;
+﻿using GuildManagerCA.Domain.CharacterAggregate;
+using GuildManagerCA.Domain.Common.Models.DomainEvents;
+using GuildManagerCA.Domain.RaidEventAggregate;
 using GuildManagerCA.Domain.RaidLocationAggregate;
+using GuildManagerCA.Domain.SpecializationAggregate;
 using GuildManagerCA.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +22,9 @@ namespace GuildManagerCA.Infrastructure.Persistence
         }
 
         public DbSet<RaidLocation> RaidLocations { get; set; } = null!;
+        public DbSet<RaidEvent> RaidEvents { get; set; } = null!;
+        public DbSet<Character> Characters { get; set; } = null!;
+        public DbSet<Specialization> Specializations { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
