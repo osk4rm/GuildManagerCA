@@ -19,6 +19,7 @@ namespace GuildManagerCA.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
+                .ValueGeneratedNever()
                 .HasColumnName("CharacterId")
                 .HasConversion(
                 id => id.Value,

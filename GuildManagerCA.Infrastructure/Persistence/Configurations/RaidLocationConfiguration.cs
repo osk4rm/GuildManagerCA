@@ -1,5 +1,6 @@
 ﻿using GuildManagerCA.Domain.RaidLocationAggregate;
 using GuildManagerCA.Domain.RaidLocationAggregate.ValueObjects;
+using GuildManagerCA.Infrastructure.Persistence.EFUtils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -34,20 +35,15 @@ namespace GuildManagerCA.Infrastructure.Persistence.Configurations
                 .HasMaxLength(100);
 
                 eb.Property(x => x.ImageUrl)
-                .HasConversion(
-                    uri => uri.ToString(),
-                    str => new Uri(str))
+                .HasUriConversion()
                 .HasColumnName("ExpansionImageUrl")
                 .HasMaxLength(100);
             });
-                
+
 
             builder.Property(e => e.ImageUrl)
                 .IsRequired()
-                .HasConversion(
-                    uri => uri.ToString(),
-                    str => new Uri(str)
-                );
+                .HasUriConversion();
         }
     }
 
