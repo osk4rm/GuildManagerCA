@@ -1,6 +1,6 @@
 ﻿using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Application.Common.Services;
-using GuildManagerCA.Domain.Entities;
+using GuildManagerCA.Domain.UserAggregate;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -32,9 +32,10 @@ namespace GuildManagerCA.Infrastructure.Authentication.Jwt
                 SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()!),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName),
                 new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.Nickname),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

@@ -9,6 +9,8 @@ namespace GuildManagerCA.Contracts.Authentication
     public record RegisterRequest(
         string FirstName,
         string LastName,
+        string NickName,
         string Email,
-        string Password);
+        string Password,
+        string ConfirmPassword);
 }

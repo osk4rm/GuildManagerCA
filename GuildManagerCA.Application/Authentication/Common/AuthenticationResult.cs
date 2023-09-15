@@ -1,4 +1,4 @@
-﻿using GuildManagerCA.Domain.Entities;
+﻿using GuildManagerCA.Domain.UserAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

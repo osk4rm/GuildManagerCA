@@ -1,4 +1,4 @@
-﻿using GuildManagerCA.Domain.UserAggregate;
+﻿using GuildManagerCA.Domain.UserRoleAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Application.Common.Persistence
 {
-    public interface IUserRepository
+    public interface IUserRoleRepository
     {
-        Task AddUser(User user);
-        Task<User?> GetUserByEmail(string email);
+        Task AddRole(UserRole role);
+        Task<UserRole?> GetRoleByName(string name);
     }
 }

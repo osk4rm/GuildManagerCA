@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Application.Common.Persistence;
-using GuildManagerCA.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GuildManagerCA.Domain.Common.Errors;
 using GuildManagerCA.Application.Authentication.Common;
+using GuildManagerCA.Domain.UserAggregate;
 
 namespace GuildManagerCA.Application.Authentication.Queries.Login
 {
@@ -26,18 +26,18 @@ namespace GuildManagerCA.Application.Authentication.Queries.Login
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            //1. validate the user exists
-            if (_userRepository.GetUserByEmail(query.Email) is not User user)
+            if (await _userRepository.GetUserByEmail(query.Email) is not User user)
             {
                 return Errors.Authentication.InvalidCredentials;
             }
-            //2. valdiate the password is correct
+
+            //do unhashing
             if (user.Password != query.Password)
             {
                 return Errors.Authentication.InvalidCredentials;
             }
-            //3. create jwt
+            
+
             var token = _jwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(

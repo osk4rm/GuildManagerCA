@@ -1,9 +1,9 @@
 ﻿using GuildManagerCA.Domain.CharacterAggregate;
 using GuildManagerCA.Domain.Common.Models.DomainEvents;
-using GuildManagerCA.Domain.Entities;
 using GuildManagerCA.Domain.RaidEventAggregate;
 using GuildManagerCA.Domain.RaidLocationAggregate;
 using GuildManagerCA.Domain.SpecializationAggregate;
+using GuildManagerCA.Domain.UserAggregate;
 using GuildManagerCA.Domain.UserRoleAggregate;
 using GuildManagerCA.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;

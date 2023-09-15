@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Application.Common.Persistence;
-using GuildManagerCA.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using GuildManagerCA.Domain.Common.Errors;
 using GuildManagerCA.Application.Authentication.Common;
+using GuildManagerCA.Domain.UserAggregate;
+using GuildManagerCA.Domain.UserRoleAggregate.ValueObjects;
+using GuildManagerCA.Domain.Common;
 
 namespace GuildManagerCA.Application.Authentication.Commands.Register
 {
@@ -18,33 +20,42 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
+        private readonly IUserRoleRepository _userRoleRepository;
 
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IUserRoleRepository userRoleRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+            _userRoleRepository = userRoleRepository;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            //1. validate the user doesn't exist
-            if (_userRepository.GetUserByEmail(command.Email) is not null)
+            //moved to validation
+            //if (await _userRepository.GetUserByEmail(command.Email) is not null)
+            //{
+            //    return Errors.User.DuplicateEmail;
+            //}
+
+            var defaultRole = await _userRoleRepository.GetRoleByName(Constants.UserRole.DefaultRole);
+
+            if (defaultRole is null)
             {
-                return Errors.User.DuplicateEmail;
+                return Errors.UserRole.DefaultRoleNotSet;
             }
-            //2. create user and generate unique id & persist to db
-            var user = new User
-            {
-                FirstName = command.FirstName,
-                LastName = command.LastName,
-                Email = command.Email,
-                Password = command.Password
-            };
 
-            _userRepository.Add(user);
+            var user = User.Create(
+                command.FirstName,
+                command.LastName,
+                command.NickName,
+                command.Email,
+                command.Password,
+                DateTime.Now,
+                DateTime.Now,
+                UserRoleId.Create(defaultRole.Id.Value));
 
-            //3. create jwt
+            await _userRepository.AddUser(user);
+
             var token = _jwtTokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(user, token);

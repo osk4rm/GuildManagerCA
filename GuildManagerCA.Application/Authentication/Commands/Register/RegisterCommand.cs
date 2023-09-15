@@ -12,6 +12,8 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
     public record RegisterCommand(
         string FirstName,
         string LastName,
+        string NickName,
         string Email,
-        string Password) : IRequest<ErrorOr<AuthenticationResult>>;
+        string Password,
+        string ConfirmPassword) : IRequest<ErrorOr<AuthenticationResult>>;
 }
