@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Infrastructure.Authentication
+namespace GuildManagerCA.Infrastructure.Authentication.Jwt
 {
     public class JwtSettings
     {

@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Infrastructure.Authentication
+namespace GuildManagerCA.Infrastructure.Authentication.Jwt
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
