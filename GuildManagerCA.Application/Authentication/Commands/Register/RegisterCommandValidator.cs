@@ -19,11 +19,11 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
             RuleFor(x=>x.Email)
                 .EmailAddress()
                 .NotEmpty();
-
+            
             RuleFor(x => x.Email)
-                .Custom((value, context) =>
+                .CustomAsync(async (value, context, cancellationToken) =>
                 {
-                    var user = userRepository.GetUserByEmail(value);
+                    var user = await userRepository.GetUserByEmail(value);
                     if (user is not null)
                     {
                         context.AddFailure("Email", "User with this email already exists.");
@@ -35,6 +35,9 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
                     .Matches(@"[A-Z]+").WithMessage("Your password must contain at least one uppercase letter.")
                     .Matches(@"[a-z]+").WithMessage("Your password must contain at least one lowercase letter.")
                     .Matches(@"[0-9]+").WithMessage("Your password must contain at least one number.");
+
+            RuleFor(x => x.ConfirmPassword).Equal(x => x.Password)
+                .WithMessage("Your confirm password doesn't match your password.");
         }
     }
 }

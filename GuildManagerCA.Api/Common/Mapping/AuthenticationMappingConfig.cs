@@ -15,7 +15,7 @@ namespace GuildManagerCA.Api.Common.Mapping
             config.NewConfig<LoginRequest, LoginQuery>();
 
             config.NewConfig<AuthenticationResult, AuthenticationResponse>()
-                .Map(dest => dest.Token, src => src.Token)
+                .Map(dest => dest.Id, src => src.User.Id.Value.ToString())
                 .Map(dest => dest, src => src.User);
         }
     }

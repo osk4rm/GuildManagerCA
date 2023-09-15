@@ -26,7 +26,7 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
         public async Task<User?> GetUserByEmail(string email)
         {
             return await _dbContext.Users
-                .SingleOrDefaultAsync(u => u.Email == email);
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

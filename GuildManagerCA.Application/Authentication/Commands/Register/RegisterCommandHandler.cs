@@ -21,12 +21,18 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IUserRoleRepository userRoleRepository)
+        public RegisterCommandHandler(
+            IJwtTokenGenerator jwtTokenGenerator,
+            IUserRepository userRepository,
+            IUserRoleRepository userRoleRepository,
+            IPasswordHasher passwordHasher)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
             _userRoleRepository = userRoleRepository;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
@@ -49,7 +55,7 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
                 command.LastName,
                 command.NickName,
                 command.Email,
-                command.Password,
+                _passwordHasher.HashPassword(command.Password),
                 DateTime.Now,
                 DateTime.Now,
                 UserRoleId.Create(defaultRole.Id.Value));

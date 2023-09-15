@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GuildManagerCA.Contracts.Authentication
 {
     public record AuthenticationResponse(
-        Guid Id,
+        string Id,
         string FirstName,
         string LastName,
         string Email,
