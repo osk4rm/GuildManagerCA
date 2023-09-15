@@ -17,11 +17,16 @@ namespace GuildManagerCA.Application.Authentication.Queries.Login
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public LoginQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
+        public LoginQueryHandler(
+            IUserRepository userRepository,
+            IJwtTokenGenerator jwtTokenGenerator,
+            IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
@@ -31,8 +36,7 @@ namespace GuildManagerCA.Application.Authentication.Queries.Login
                 return Errors.Authentication.InvalidCredentials;
             }
 
-            //do unhashing
-            if (user.Password != query.Password)
+            if (!_passwordHasher.VerifyPassword(query.Password, user.Password))
             {
                 return Errors.Authentication.InvalidCredentials;
             }
