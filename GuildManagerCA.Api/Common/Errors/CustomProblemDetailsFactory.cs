@@ -35,11 +35,23 @@ namespace GuildManagerCA.Api.Common.Errors
             return problemDetails;
         }
 
-        public override ValidationProblemDetails CreateValidationProblemDetails(HttpContext httpContext, ModelStateDictionary modelStateDictionary, int? statusCode = null, string? title = null, string? type = null, string? detail = null, string? instance = null)
+        public override ValidationProblemDetails CreateValidationProblemDetails(
+            HttpContext httpContext,
+            ModelStateDictionary modelStateDictionary,
+            int? statusCode = null,
+            string? title = null,
+            string? type = null,
+            string? detail = null,
+            string? instance = null)
         {
-            statusCode ??= 500;
+            if (modelStateDictionary == null)
+            {
+                throw new ArgumentNullException(nameof(modelStateDictionary));
+            }
 
-            var problemDetails = new ValidationProblemDetails
+            statusCode ??= 400;
+
+            var problemDetails = new ValidationProblemDetails(modelStateDictionary)
             {
                 Status = statusCode,
                 Title = title,
