@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
-using GuildManagerCA.Application.ClassSpecializations.Queries;
+using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
+using GuildManagerCA.Application.ClassSpecializations.Queries.GetById;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
 using GuildManagerCA.Contracts.ClassSpecializations.GetAll;
 using MapsterMapper;
@@ -22,15 +23,26 @@ public class SpecializationsController : ApiController
         _mapper = mapper;
     }
 
-    [AllowAnonymous] //temp
     [HttpGet("getall")]
-    public async Task<IActionResult> GetAll([FromRoute] bool onlyActive = false)
+    public async Task<IActionResult> GetAll([FromQuery] bool onlyActive = false)
     {
         var query = _mapper.Map<GetAllSpecializationsQuery>(onlyActive);
         var queryResult = await _mediator.Send(query);
 
         return queryResult.Match(
             specializations => Ok(specializations.Select(spec => _mapper.Map<SpecializationResponse>(spec))),
+            errors => Problem(errors)
+            );
+    }
+
+    [HttpGet("get/{id}")]
+    public async Task<IActionResult> GetById(string id)
+    {
+        var query = new GetSpecializationByIdQuery(id);
+        var queryResult = await _mediator.Send(query);
+
+        return queryResult.Match(
+            specialization => Ok(_mapper.Map<SpecializationResponse>(specialization)),
             errors => Problem(errors)
             );
     }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Application.ClassSpecializations.Queries
+namespace GuildManagerCA.Application.ClassSpecializations.Queries.GetAll
 {
     public class GetAllSpecializationsQueryHandler : IRequestHandler<GetAllSpecializationsQuery, ErrorOr<List<Specialization>>>
     {
