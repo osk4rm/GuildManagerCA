@@ -1,14 +1,54 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ErrorOr;
+using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
+using GuildManagerCA.Application.ClassSpecializations.Queries;
+using GuildManagerCA.Contracts.ClassSpecializations.Create;
+using GuildManagerCA.Contracts.ClassSpecializations.GetAll;
+using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuildManagerCA.Api.Controllers;
 
-[Route("[controller]")]
-public class ClassSpecializationsController : ApiController
+[Route("api/[controller]")]
+public class SpecializationsController : ApiController
 {
-    [HttpGet]
-    public IActionResult GetClassSpecializations()
+    private readonly ISender _mediator;
+    private readonly IMapper _mapper;
+
+    public SpecializationsController(ISender mediator, IMapper mapper)
     {
-        return Ok(Array.Empty<string>());
+        _mediator = mediator;
+        _mapper = mapper;
+    }
+
+    [AllowAnonymous] //temp
+    [HttpGet("getall")]
+    public async Task<IActionResult> GetAll([FromRoute] bool onlyActive = false)
+    {
+        var query = _mapper.Map<GetAllSpecializationsQuery>(onlyActive);
+        var queryResult = await _mediator.Send(query);
+
+        return queryResult.Match(
+            specializations => Ok(specializations.Select(spec => _mapper.Map<SpecializationResponse>(spec))),
+            errors => Problem(errors)
+            );
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] CreateSpecializationRequest request)
+    {
+        var command = _mapper.Map<CreateSpecializationCommand>(request);
+        ErrorOr<CreateSpecializationResult> result = await _mediator.Send(command);
+
+        return result.Match(
+            specResult =>
+            {
+                var response = _mapper.Map<CreateSpecializationResponse>(specResult);
+                return Created("api/specializations/get/", response.Id);
+            },
+            errors => Problem(errors));
+
+
     }
 }
