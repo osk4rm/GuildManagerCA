@@ -22,12 +22,14 @@ namespace GuildManagerCA.Api.Common.Mapping
                 .Map(dest => dest.ClassImageUrl, src => src.CharacterClass.ImageUrl)
                 .Map(dest => dest.ClassName, src => src.CharacterClass.Name)
                 .Map(dest => dest.SpecializationRole, src => Enum.GetName(typeof(SpecializationRole) ,src.SpecializationRole));
+
+            //getall
             config.NewConfig<bool, GetAllSpecializationsQuery>()
-                .Map(dest => dest.OnlyActive, src => src);
+                .MapWith(src => new GetAllSpecializationsQuery(src));
 
             //getbyid
             config.NewConfig<string, GetSpecializationByIdQuery>()
-                .Map(dest => dest.Id, src => src);
+                .MapWith(src => new GetSpecializationByIdQuery(src));
         }
     }
 }
