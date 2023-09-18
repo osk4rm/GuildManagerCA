@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
+using GuildManagerCA.Application.ClassSpecializations.Queries.GetByClassName;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetById;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
 using GuildManagerCA.Contracts.ClassSpecializations.GetAll;
@@ -47,6 +48,18 @@ public class SpecializationsController : ApiController
             );
     }
 
+    [HttpGet("getbyclassname")]
+    public async Task<IActionResult> GetByClassName(string className)
+    {
+        var query = new GetSpecializationByClassNameQuery(className);
+        var queryResult = await _mediator.Send(query);
+
+        return queryResult.Match(
+            specializations => Ok(specializations.Select(spec => _mapper.Map<SpecializationResponse>(spec))),
+            errors => Problem(errors)
+            );
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateSpecializationRequest request)
     {
@@ -60,7 +73,7 @@ public class SpecializationsController : ApiController
                 return Created("api/specializations/get/", response.Id);
             },
             errors => Problem(errors));
-
-
     }
+
+    
 }

@@ -42,5 +42,12 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
             return await _dbContext.Specializations
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
+
+        public async Task<List<Specialization>> GetByClassName(string className)
+        {
+            return await _dbContext.Specializations
+                .Where(s => s.CharacterClass.Name == className)
+                .ToListAsync();
+        }
     }
 }

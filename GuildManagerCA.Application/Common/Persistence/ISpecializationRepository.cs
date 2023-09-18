@@ -13,6 +13,7 @@ namespace GuildManagerCA.Application.Common.Persistence
         Task CreateAsync(Specialization specialization);
         Task<List<Specialization>> GetAllActiveAsync();
         Task<List<Specialization>> GetAllAsync();
+        Task<List<Specialization>> GetByClassName(string className);
         Task<Specialization?> GetById(SpecializationId id);
     }
 }
