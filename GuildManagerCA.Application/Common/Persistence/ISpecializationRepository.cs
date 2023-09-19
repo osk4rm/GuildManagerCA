@@ -15,5 +15,7 @@ namespace GuildManagerCA.Application.Common.Persistence
         Task<List<Specialization>> GetAllAsync();
         Task<List<Specialization>> GetByClassName(string className);
         Task<Specialization?> GetById(SpecializationId id);
+        Task<Specialization?> SetActivity(SpecializationId id, bool isActive);
+        Task<Specialization?> UpdateSpecialization(SpecializationId id, string name, string imageUrl);
     }
 }

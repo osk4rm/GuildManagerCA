@@ -1,8 +1,8 @@
 ﻿using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetById;
+using GuildManagerCA.Contracts.ClassSpecializations;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
-using GuildManagerCA.Contracts.ClassSpecializations.GetAll;
 using GuildManagerCA.Domain.SpecializationAggregate;
 using GuildManagerCA.Domain.SpecializationAggregate.Enum;
 using Mapster;

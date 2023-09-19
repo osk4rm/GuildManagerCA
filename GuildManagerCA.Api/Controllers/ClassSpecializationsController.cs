@@ -1,10 +1,12 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
+using GuildManagerCA.Application.ClassSpecializations.Commands.Update;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetByClassName;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetById;
+using GuildManagerCA.Contracts.ClassSpecializations;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
-using GuildManagerCA.Contracts.ClassSpecializations.GetAll;
+using GuildManagerCA.Contracts.ClassSpecializations.Update;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -75,5 +77,27 @@ public class SpecializationsController : ApiController
             errors => Problem(errors));
     }
 
-    
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> Update(string id, [FromBody] UpdateSpecializationRequest request)
+    {
+        var command = new UpdateSpecializationCommand(id, request.Name, request.ImageUrl);
+        var commandResult = await _mediator.Send(command);
+
+        return commandResult.Match(
+            specialization => Ok(_mapper.Map<SpecializationResponse>(specialization)),
+            errors => Problem(errors));
+    }
+
+    [HttpPut("setactivity/{id}")]
+    public async Task<IActionResult> SetActivity(string id, bool isActive)
+    {
+        var command = new 
+        var commandResult = await _mediator.Send(command);
+
+        return commandResult.Match(
+            specialization => Ok(_mapper.Map<SpecializationResponse>(specialization)),
+            errors => Problem(errors));
+    }
+
+
 }

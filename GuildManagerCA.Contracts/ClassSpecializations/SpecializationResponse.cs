@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Contracts.ClassSpecializations.GetAll
+namespace GuildManagerCA.Contracts.ClassSpecializations
 {
     public record SpecializationResponse(
         string Name,
