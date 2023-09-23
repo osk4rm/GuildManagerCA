@@ -11,13 +11,10 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Infrastructure.Persistence.Repositories
 {
-    public class SpecializationRepository : ISpecializationRepository
+    public class SpecializationRepository : RepositoryBase<Specialization, SpecializationId>, ISpecializationRepository
     {
-        private readonly GuildManagerDbContext _dbContext;
-
-        public SpecializationRepository(GuildManagerDbContext dbContext)
+        public SpecializationRepository(GuildManagerDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         public async Task CreateAsync(Specialization specialization)
@@ -26,22 +23,11 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Specialization>> GetAllAsync()
-        {
-            return await _dbContext.Specializations.ToListAsync();
-        }
-
         public async Task<List<Specialization>> GetAllActiveAsync()
         {
             return await _dbContext.Specializations
                 .Where(s=>s.IsActive)
                 .ToListAsync();
-        }
-
-        public async Task<Specialization?> GetById(SpecializationId id)
-        {
-            return await _dbContext.Specializations
-                .SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<List<Specialization>> GetByClassName(string className)

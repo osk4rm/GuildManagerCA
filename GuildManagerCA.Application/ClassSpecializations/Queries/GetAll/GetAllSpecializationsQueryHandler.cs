@@ -25,7 +25,7 @@ namespace GuildManagerCA.Application.ClassSpecializations.Queries.GetAll
                 return await _specializationRepository.GetAllActiveAsync();
             }
 
-            return await _specializationRepository.GetAllAsync();
+            return (await _specializationRepository.GetAllAsync()).ToList();
         }
     }
 }

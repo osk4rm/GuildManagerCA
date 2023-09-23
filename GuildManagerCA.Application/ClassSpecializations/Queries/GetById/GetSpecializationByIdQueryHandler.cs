@@ -26,7 +26,7 @@ namespace GuildManagerCA.Application.ClassSpecializations.Queries.GetById
             {
                 return createSpecIdResult.FirstError;
             }
-            var specialization = await _specializationRepository.GetById(createSpecIdResult.Value);
+            var specialization = await _specializationRepository.GetByIdAsync(createSpecIdResult.Value);
 
             return specialization;
         }

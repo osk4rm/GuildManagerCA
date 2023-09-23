@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
+using GuildManagerCA.Application.ClassSpecializations.Commands.SetActivity;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Update;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetByClassName;
@@ -91,7 +92,7 @@ public class SpecializationsController : ApiController
     [HttpPut("setactivity/{id}")]
     public async Task<IActionResult> SetActivity(string id, bool isActive)
     {
-        var command = new 
+        var command = new SetActivityCommand(id, isActive);
         var commandResult = await _mediator.Send(command);
 
         return commandResult.Match(
