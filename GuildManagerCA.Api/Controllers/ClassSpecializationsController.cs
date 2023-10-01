@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Create;
+using GuildManagerCA.Application.ClassSpecializations.Commands.Delete;
 using GuildManagerCA.Application.ClassSpecializations.Commands.SetActivity;
 using GuildManagerCA.Application.ClassSpecializations.Commands.Update;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
@@ -97,6 +98,17 @@ public class SpecializationsController : ApiController
 
         return commandResult.Match(
             specialization => Ok(_mapper.Map<SpecializationResponse>(specialization)),
+            errors => Problem(errors));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var command = new DeleteSpecializationCommand(id);
+        var commandResult = await _mediator.Send(command);
+
+        return commandResult.Match(
+            removed => NoContent(),
             errors => Problem(errors));
     }
 

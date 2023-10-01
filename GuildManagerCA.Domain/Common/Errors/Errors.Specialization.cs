@@ -15,7 +15,10 @@ namespace GuildManagerCA.Domain.Common.Errors
                 Error.Validation(code: "Specialization.InvalidSpecializationId", description: "Invalid Specialization ID");
 
             public static Error UpdateFailed =>
-                Error.Validation(code: "Specialization.UpdateFailed", description: "Repository failed to update an entity.");
+                Error.Failure(code: "Specialization.UpdateFailed", description: "Repository failed to update an entity.");
+
+            public static Error Delete =>
+                Error.Failure(code: "Specialization.UpdateFailed", description: "Repository failed to remove an entity.");
         }
     }
 }
