@@ -13,6 +13,9 @@ namespace GuildManagerCA.Domain.Common.Errors
         {
             public static Error RepositoryDelete =>
                 Error.Validation(code: "Common.RepositoryDelete", description: "Error deleting an entity");
+
+            public static Error RepositoryUpdate =>
+                Error.Validation(code: "Common.RepositoryDelete", description: "Error updating an entity");
         }
     }
 }

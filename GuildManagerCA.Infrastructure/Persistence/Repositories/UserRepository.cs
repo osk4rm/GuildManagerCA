@@ -1,5 +1,6 @@
 ﻿using GuildManagerCA.Application.Common.Persistence;
 using GuildManagerCA.Domain.UserAggregate;
+using GuildManagerCA.Domain.UserAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,11 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Infrastructure.Persistence.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase<User, UserId>, IUserRepository
     {
-        private readonly GuildManagerDbContext _dbContext;
 
-        public UserRepository(GuildManagerDbContext dbContext)
+        public UserRepository(GuildManagerDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-        }
-        public async Task AddUser(User user)
-        {
-            _dbContext.Add(user);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<User?> GetUserByEmail(string email)
