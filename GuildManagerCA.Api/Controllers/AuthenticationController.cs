@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using GuildManagerCA.Application.Authentication.Commands.ChangePassword;
 using GuildManagerCA.Application.Authentication.Commands.Register;
 using GuildManagerCA.Application.Authentication.Common;
 using GuildManagerCA.Application.Authentication.Queries.Login;
@@ -52,6 +53,17 @@ namespace GuildManagerCA.Api.Controllers
 
             return authResult.Match(
                 authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
+                errors => Problem(errors)
+                );
+        }
+
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordCommand request)
+        {
+            var changePasswordResult = await _mediator.Send(request);
+
+            return changePasswordResult.Match(
+                changePasswordResult => Ok(_mapper.Map<ChangePasswordResponse>(changePasswordResult)),
                 errors => Problem(errors)
                 );
         }

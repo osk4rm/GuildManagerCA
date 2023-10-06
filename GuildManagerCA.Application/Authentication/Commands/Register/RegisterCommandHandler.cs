@@ -60,7 +60,7 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
                 DateTime.Now,
                 UserRoleId.Create(defaultRole.Id.Value));
 
-            await _userRepository.AddUser(user);
+            await _userRepository.AddAsync(user);
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
