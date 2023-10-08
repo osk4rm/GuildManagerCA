@@ -2,7 +2,8 @@
 
 namespace GuildManagerCA.Tests.Integration.Setup
 {
-    public abstract class BaseIntegrationTest : IClassFixture<IntegrationTestWebAppFactory>, IAsyncLifetime
+    [Collection("GM")]
+    public abstract class BaseIntegrationTest :  IAsyncLifetime
     {
         private readonly IServiceScope _scope;
         protected readonly ISender _sender;
