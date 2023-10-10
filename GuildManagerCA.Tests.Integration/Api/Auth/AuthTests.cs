@@ -3,7 +3,7 @@ using GuildManagerCA.Application.Authentication.Commands.Register;
 using GuildManagerCA.Tests.Integration.Setup;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace GuildManagerCA.Tests.Integration.Auth
+namespace GuildManagerCA.Tests.Integration.Api.Auth
 {
     public class AuthTests : BaseIntegrationTest
     {

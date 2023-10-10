@@ -1,4 +1,6 @@
 ﻿using GuildManagerCA.Infrastructure.Persistence;
+using GuildManagerCA.Tests.Integration.Setup.Auth;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Data.SqlClient;
@@ -17,11 +19,13 @@ namespace GuildManagerCA.Tests.Integration.Setup
         private DbConnection _dbConnection = default!;
         private Respawner _respawner = default!;
 
-
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureTestServices(services =>
             {
+                services.AddSingleton<IPolicyEvaluator, FakePolicyEvaluator>();
+                services.AddMvc(opts => opts.Filters.Add(new FakeUserFilter()));
+
                 var descriptor = services
                 .SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<GuildManagerDbContext>));
 
@@ -63,6 +67,14 @@ namespace GuildManagerCA.Tests.Integration.Setup
         public new async Task DisposeAsync()
         {
             await _container.StopAsync();
+        }
+
+        public HttpClient CreateClientWithoutAuthorization()
+        {
+            var client = this.CreateClient();
+            client.DefaultRequestHeaders.Add("Unauthorized-Test", "true");
+
+            return client;
         }
     }
 }
