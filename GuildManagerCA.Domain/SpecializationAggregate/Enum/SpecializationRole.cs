@@ -8,10 +8,10 @@ namespace GuildManagerCA.Domain.SpecializationAggregate.Enum
 {
     public enum SpecializationRole
     {
-        Tank,
-        Healer,
-        MeleeDPS,
-        RangedDPS,
-        Hybrid
+        Tank = 1,
+        Healer = 2,
+        MeleeDPS = 3,
+        RangedDPS = 4,
+        Hybrid = 5
     }
 }

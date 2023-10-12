@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Respawn;
+using Respawn.Graph;
 using System.Data.Common;
 using Testcontainers.MsSql;
 
@@ -14,10 +15,11 @@ namespace GuildManagerCA.Tests.Integration.Setup
     public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
         private readonly MsSqlContainer _container = new MsSqlBuilder()
+            .WithExposedPort(4321)
             .Build();
 
-        private DbConnection _dbConnection = default!;
-        private Respawner _respawner = default!;
+        
+        public string ContainerConnectionString { get; set; } = default!;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -38,30 +40,19 @@ namespace GuildManagerCA.Tests.Integration.Setup
                 {
                     options.UseSqlServer(_container.GetConnectionString());
                 });
-
             });
         }
 
-        public async Task ResetDatabaseAsync()
+        public async Task ResetDatabaseAsync(Respawner respawner)
         {
-            await _respawner.ResetAsync(_container.GetConnectionString());
+            await respawner.ResetAsync(_container.GetConnectionString());
         }
 
         public async Task InitializeAsync()
         {
             await _container.StartAsync();
-            _dbConnection = new SqlConnection(_container.GetConnectionString());
-            await InitializeRespawner();
-        }
-
-        private async Task InitializeRespawner()
-        {
-            await _dbConnection.OpenAsync();
-            _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
-            {
-                DbAdapter = DbAdapter.SqlServer,
-                SchemasToInclude = new[] { "dbo" }
-            });
+            ContainerConnectionString = _container.GetConnectionString();
+            //await InitializeRespawner();
         }
 
         public new async Task DisposeAsync()
