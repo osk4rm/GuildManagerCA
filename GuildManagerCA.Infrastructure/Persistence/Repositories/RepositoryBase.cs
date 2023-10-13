@@ -81,7 +81,7 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
 
         public async Task<TEntity?> GetByIdAsync(TId id)
         {
-            return await _dbContext.Set<TEntity>().FindAsync(id);
+            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
         public async Task UpdateAsync(TEntity entity)
