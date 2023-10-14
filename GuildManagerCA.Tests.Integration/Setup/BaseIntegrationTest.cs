@@ -43,7 +43,9 @@ namespace GuildManagerCA.Tests.Integration.Setup
             {
                 TablesToInclude = new[]
                 {
-                new Table("dbo", "Specializations")
+                new Table("dbo", "Specializations"),
+                new Table("dbo", "Users"),
+
             },
                 SchemasToInclude = new[] { "dbo" }
             });

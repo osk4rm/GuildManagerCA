@@ -11,7 +11,7 @@ using GuildManagerCA.Domain.Common.Errors;
 using GuildManagerCA.Application.Authentication.Common;
 using GuildManagerCA.Domain.UserAggregate;
 using GuildManagerCA.Domain.UserRoleAggregate.ValueObjects;
-using GuildManagerCA.Domain.Common;
+using GuildManagerCA.Domain.Common.Constants;
 
 namespace GuildManagerCA.Application.Authentication.Commands.Register
 {
@@ -37,12 +37,6 @@ namespace GuildManagerCA.Application.Authentication.Commands.Register
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            //moved to validation
-            //if (await _userRepository.GetUserByEmail(command.Email) is not null)
-            //{
-            //    return Errors.User.DuplicateEmail;
-            //}
-
             var defaultRole = await _userRoleRepository.GetRoleByName(Constants.UserRole.DefaultRole);
 
             if (defaultRole is null)
