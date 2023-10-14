@@ -47,6 +47,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+        services.AddScoped<ICharacterRepository, CharacterRepository>();
         services.AddScoped<DatabaseSeeder>();
 
         return services;

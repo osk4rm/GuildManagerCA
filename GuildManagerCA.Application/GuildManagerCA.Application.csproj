@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Characters\Commands\" />
-    <Folder Include="Characters\Queries\" />
   </ItemGroup>
 
 </Project>
