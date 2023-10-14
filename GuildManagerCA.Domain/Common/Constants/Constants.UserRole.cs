@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Domain.Common
+namespace GuildManagerCA.Domain.Common.Constants
 {
     public static partial class Constants
     {

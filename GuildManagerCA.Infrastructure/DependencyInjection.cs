@@ -6,6 +6,7 @@ using GuildManagerCA.Infrastructure.Authentication.Security;
 using GuildManagerCA.Infrastructure.Persistence;
 using GuildManagerCA.Infrastructure.Persistence.Interceptors;
 using GuildManagerCA.Infrastructure.Persistence.Repositories;
+using GuildManagerCA.Infrastructure.Persistence.Seeders;
 using GuildManagerCA.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+        services.AddScoped<DatabaseSeeder>();
 
         return services;
     }
