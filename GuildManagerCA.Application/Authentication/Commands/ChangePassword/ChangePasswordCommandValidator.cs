@@ -30,14 +30,14 @@ namespace GuildManagerCA.Application.Authentication.Commands.ChangePassword
                     }
                 });
 
-            RuleFor(x => x.OldPassword)
+            RuleFor(x => new { x.OldPassword, x.UserId })
                 .CustomAsync(async (value, context, token) =>
                 {
-                    var userId = UserId.Create(value);
+                    var userId = UserId.Create(value.UserId);
                     if (!userId.IsError)
                     {
                         if ((await userRepository.GetByIdAsync(userId.Value)) is User user)
-                            if (passwordHasher.VerifyPassword(value, user.Password) == false)
+                            if (passwordHasher.VerifyPassword(value.OldPassword, user.Password) == false)
                             {
                                 context.AddFailure("Incorrect password.");
                             }

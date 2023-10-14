@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using GuildManagerCA.Application.Authentication.Commands.ChangePassword;
 using GuildManagerCA.Application.Authentication.Commands.Register;
 using GuildManagerCA.Application.Authentication.Common;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
@@ -23,6 +24,28 @@ namespace GuildManagerCA.Tests.Integration.Api.Auth.TestData
                 new RegisterCommand("john","doe","jdoe","jdoe@gmail.com","xzawe15@","xzawe15@"),
                 //passwords do not match
                 new RegisterCommand("","doe","jdoe","jdoe@gmail.com","JDxzawe15@","JDxzawe15$"),
+
+            };
+
+            return list.Select(l => new object[] { l });
+        }
+
+        public static IEnumerable<object[]> GetInvalidChangePasswordData()
+        {
+            var list = new List<ChangePasswordCommand>
+            {
+                //invalid old password
+                new ChangePasswordCommand("dummy", "Test124#", "Test321#", "Test321#"),
+                //no special character
+                new ChangePasswordCommand("dummy", "Test123#", "Test321", "Test321"),
+                //no capital letter
+                new ChangePasswordCommand("dummy", "Test123#", "abc3332#", "abc3332#"),
+                //too short
+                new ChangePasswordCommand("dummy", "Test123#", "T321#", "T321#"),
+                //password and confirm password aren't matching
+                new ChangePasswordCommand("dummy", "Test123#", "Test321#", "Test432#"),
+                
+                
 
             };
 
