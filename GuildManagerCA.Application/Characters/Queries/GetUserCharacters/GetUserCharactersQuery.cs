@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Application.Characters.Queries
+namespace GuildManagerCA.Application.Characters.Queries.GetUserCharacters
 {
-    public record GetAllCharactersQuery : IRequest<ErrorOr<List<Character>>>;
+    public record GetUserCharactersQuery : IRequest<ErrorOr<List<Character>>>;
 }

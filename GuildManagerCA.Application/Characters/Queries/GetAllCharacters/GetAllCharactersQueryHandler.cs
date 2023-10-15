@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GuildManagerCA.Application.Characters.Queries
+namespace GuildManagerCA.Application.Characters.Queries.GetAllCharacters
 {
     public class GetAllCharactersQueryHandler : IRequestHandler<GetAllCharactersQuery, ErrorOr<List<Character>>>
     {

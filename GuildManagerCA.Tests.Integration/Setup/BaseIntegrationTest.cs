@@ -27,7 +27,6 @@ namespace GuildManagerCA.Tests.Integration.Setup
             _connectionString = factory.ContainerConnectionString;
             _sender = _scope.ServiceProvider.GetRequiredService<ISender>();
             _httpClient = factory.CreateClient();
-            
         }
 
         public async Task InitializeAsync()

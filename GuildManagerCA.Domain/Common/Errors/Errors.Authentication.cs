@@ -12,6 +12,8 @@ namespace GuildManagerCA.Domain.Common.Errors
         public static class Authentication
         {
             public static Error InvalidCredentials => Error.Validation(code: "Auth.InvalidCredentials", description: "Invalid credentials.");
+            public static Error UserContextIdNull =>
+                Error.Validation(code: "Auth.UserContextIdNull", description: "Couldn't resolve user id from the token.");
         }
     }
 }
