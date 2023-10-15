@@ -1,4 +1,5 @@
-﻿using GuildManagerCA.Domain.SpecializationAggregate;
+﻿using GuildManagerCA.Application.ClassSpecializations.Queries.GetClasses;
+using GuildManagerCA.Domain.SpecializationAggregate;
 using GuildManagerCA.Domain.SpecializationAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace GuildManagerCA.Application.Common.Persistence
         Task<List<Specialization>> GetAllActiveAsync();
         //Task<List<Specialization>> GetAllAsync();
         Task<List<Specialization>> GetByClassName(string className);
+        Task<IEnumerable<ClassResult>> GetClasses();
+
         //Task<Specialization?> GetById(SpecializationId id);
         Task<Specialization?> SetActivity(SpecializationId id, bool isActive);
 

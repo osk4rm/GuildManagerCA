@@ -104,6 +104,8 @@ namespace GuildManagerCA.Tests.Integration.Api.Specialization
             
         }
 
+
+
         private async Task SeedDummyData()
         {
             var requests = CreateSpecializationRequestTestData.GetCreateSpecializationRequestValidData();

@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+using GuildManagerCA.Application.ClassSpecializations.Queries.GetClasses;
 using GuildManagerCA.Application.Common.Persistence;
 using GuildManagerCA.Domain.SpecializationAggregate;
 using GuildManagerCA.Domain.SpecializationAggregate.ValueObjects;
@@ -36,6 +37,16 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
                 .Where(s => s.CharacterClass.Name == className)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<ClassResult>> GetClasses()
+        {
+            return await _dbContext.Specializations
+                .GroupBy(s => s.CharacterClass.Name)
+                .Select(g => g.First())
+                .Select(s => new ClassResult( s.CharacterClass.Name, s.CharacterClass.ImageUrl.ToString()))
+                .ToListAsync();
+        }
+
 
         public async Task<Specialization?> UpdateSpecialization(SpecializationId id, string name, string imageUrl)
         {

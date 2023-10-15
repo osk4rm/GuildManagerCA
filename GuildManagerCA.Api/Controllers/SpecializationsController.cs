@@ -6,6 +6,7 @@ using GuildManagerCA.Application.ClassSpecializations.Commands.Update;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetAll;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetByClassName;
 using GuildManagerCA.Application.ClassSpecializations.Queries.GetById;
+using GuildManagerCA.Application.ClassSpecializations.Queries.GetClasses;
 using GuildManagerCA.Contracts.ClassSpecializations;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
 using GuildManagerCA.Contracts.ClassSpecializations.Update;
@@ -60,6 +61,19 @@ public class SpecializationsController : ApiController
 
         return queryResult.Match(
             specializations => Ok(specializations.Select(spec => _mapper.Map<SpecializationResponse>(spec))),
+            errors => Problem(errors)
+            );
+    }
+
+    [HttpGet("getclasses")]
+    public async Task<IActionResult> GetClasses()
+    {
+        var query = new GetClassesQuery();
+
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            classes => Ok(classes.Select(c => _mapper.Map<ClassResponse>(c))),
             errors => Problem(errors)
             );
     }
