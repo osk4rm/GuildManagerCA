@@ -17,8 +17,4 @@
     <ProjectReference Include="..\GuildManagerCA.Domain\GuildManagerCA.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Characters\Commands\" />
-  </ItemGroup>
-
 </Project>

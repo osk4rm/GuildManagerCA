@@ -75,5 +75,28 @@ namespace GuildManagerCA.Infrastructure.Persistence.Repositories
 
             return _dbContext.Specializations.SingleOrDefault(s => s.Id == id);
         }
+
+        public async Task<bool> VerifySpecializationIds(IEnumerable<SpecializationId> ids)
+        {
+            var dbIds = await _dbContext.Specializations.Select(spec => spec.Id).ToListAsync();
+
+            return ids.All(id => dbIds.Contains(id));
+        }
+
+        public async Task<bool> VerifySpecializationsHaveSameClassName(IEnumerable<SpecializationId> ids)
+        {
+            var specializations = await _dbContext.Specializations
+                                                 .Where(spec => ids.Contains(spec.Id))
+                                                 .ToListAsync();
+
+            if (!specializations.Any() || specializations.Count != ids.Count())
+            {
+                return false;
+            }
+
+            return specializations.Select(spec => spec.CharacterClass).Distinct().Count() == 1;
+        }
+
+
     }
 }

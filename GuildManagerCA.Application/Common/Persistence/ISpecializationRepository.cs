@@ -22,5 +22,7 @@ namespace GuildManagerCA.Application.Common.Persistence
 
         //wondering if I want to remove it
         Task<Specialization?> UpdateSpecialization(SpecializationId id, string name, string imageUrl);
+        Task<bool> VerifySpecializationIds(IEnumerable<SpecializationId> ids);
+        Task<bool> VerifySpecializationsHaveSameClassName(IEnumerable<SpecializationId> ids);
     }
 }

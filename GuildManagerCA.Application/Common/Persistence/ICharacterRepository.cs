@@ -10,6 +10,6 @@ namespace GuildManagerCA.Application.Common.Persistence
 {
     public interface ICharacterRepository : IAsyncRepository<Character, CharacterId>
     {
-
+        Task<bool> CharacterWithNameExists(string name);
     }
 }

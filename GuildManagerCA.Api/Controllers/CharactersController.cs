@@ -1,7 +1,9 @@
-﻿using GuildManagerCA.Application.Characters.Queries;
+﻿using GuildManagerCA.Application.Characters.Commands.Create;
+using GuildManagerCA.Application.Characters.Queries;
 using GuildManagerCA.Application.Characters.Queries.GetAllCharacters;
 using GuildManagerCA.Application.Characters.Queries.GetUserCharacters;
 using GuildManagerCA.Contracts.Characters;
+using GuildManagerCA.Contracts.ClassSpecializations.Create;
 using GuildManagerCA.Domain.Common.Errors;
 using MapsterMapper;
 using MediatR;
@@ -22,6 +24,7 @@ namespace GuildManagerCA.Api.Controllers
             _sender = sender;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -57,6 +60,20 @@ namespace GuildManagerCA.Api.Controllers
                 chars => Ok(_mapper.Map<List<CharacterResponse>>(result.Value)),
                 errors => Problem(errors)
                 );
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateCharacterCommand command)
+        {
+            var result = await _sender.Send(command);
+
+            return result.Match(
+            character =>
+            {
+                var response = _mapper.Map<CreateCharacterResponse>(character);
+                return Created("api/characters/get/", response.Id);
+            },
+            errors => Problem(errors));
         }
 
         
