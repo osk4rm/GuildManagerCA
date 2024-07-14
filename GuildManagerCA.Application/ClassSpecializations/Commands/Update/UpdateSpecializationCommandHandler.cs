@@ -23,10 +23,12 @@ namespace GuildManagerCA.Application.ClassSpecializations.Commands.Update
         public async Task<ErrorOr<Specialization>> Handle(UpdateSpecializationCommand request, CancellationToken cancellationToken)
         {
             var specId = SpecializationId.Create(request.Id);
+
             if (specId.IsError)
             {
                 return Errors.Specialization.InvalidSpecializationId;
             }
+
             var updatedSpec = await _specializationRepository.UpdateSpecialization(specId.Value, request.Name, request.ImageUrl);
 
             if(updatedSpec is null)

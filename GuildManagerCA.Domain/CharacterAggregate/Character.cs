@@ -7,6 +7,7 @@ using GuildManagerCA.Domain.UserAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,6 +48,11 @@ namespace GuildManagerCA.Domain.CharacterAggregate
             var character = new Character(name, itemLevel, userId, specializationIds);
             character.AddDomainEvent(new CharacterCreated(character));
             return character;
+        }
+
+        public static Character Update(string name, double itemLevel, List<SpecializationId> specializationIds, CharacterId characterId, UserId userId)
+        {
+            return new Character(name, itemLevel, userId, specializationIds, characterId);
         }
 
         

@@ -1,4 +1,7 @@
-﻿using GuildManagerCA.Domain.Common.Models;
+﻿using ErrorOr;
+using GuildManagerCA.Domain.Common.Models;
+using GuildManagerCA.Domain.Common.Errors;
+using GuildManagerCA.Domain.SpecializationAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +18,14 @@ namespace GuildManagerCA.Domain.CharacterAggregate.ValueObjects
 
         public static CharacterId CreateUnique() => new(Guid.NewGuid());
         public static CharacterId Create(Guid value) => new(value);
+        public static ErrorOr<CharacterId> Create(string value)
+        {
+            if (!Guid.TryParse(value, out var guid))
+            {
+                return Errors.Characters.InvalidCharacterId;
+            }
 
+            return new CharacterId(guid);
+        }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using GuildManagerCA.Application.Characters.Commands.Create;
+using GuildManagerCA.Application.Characters.Commands.Update;
 using GuildManagerCA.Application.Characters.Queries;
 using GuildManagerCA.Application.Characters.Queries.GetAllCharacters;
 using GuildManagerCA.Application.Characters.Queries.GetUserCharacters;
+using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Contracts.Characters;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
 using GuildManagerCA.Domain.Common.Errors;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +22,9 @@ namespace GuildManagerCA.Api.Controllers
         private readonly ISender _sender;
         private readonly IMapper _mapper;
 
-        public CharactersController(ISender sender, IMapper mapper)
+        public CharactersController(
+            ISender sender,
+            IMapper mapper)
         {
             _sender = sender;
             _mapper = mapper;
@@ -76,6 +81,18 @@ namespace GuildManagerCA.Api.Controllers
             errors => Problem(errors));
         }
 
-        
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateCharacterCommand command)
+        {
+            var result = await _sender.Send(command);
+
+            return result.Match(
+            character =>
+            {
+                var response = _mapper.Map<CharacterResponse>(character);
+                return Ok(response);
+            },
+            errors => Problem(errors));
+        }
     }
 }

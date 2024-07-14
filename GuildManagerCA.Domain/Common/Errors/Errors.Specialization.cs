@@ -18,7 +18,7 @@ namespace GuildManagerCA.Domain.Common.Errors
                 Error.Failure(code: "Specialization.UpdateFailed", description: "Repository failed to update an entity.");
 
             public static Error Delete =>
-                Error.Failure(code: "Specialization.UpdateFailed", description: "Repository failed to remove an entity.");
+                Error.Failure(code: "Specialization.DeleteFailed", description: "Repository failed to remove an entity.");
         }
     }
 }
