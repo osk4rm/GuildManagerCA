@@ -47,12 +47,18 @@ namespace GuildManagerCA.Domain.CharacterAggregate
         {
             var character = new Character(name, itemLevel, userId, specializationIds);
             character.AddDomainEvent(new CharacterCreated(character));
+
             return character;
         }
 
         public static Character Update(string name, double itemLevel, List<SpecializationId> specializationIds, CharacterId characterId, UserId userId)
         {
             return new Character(name, itemLevel, userId, specializationIds, characterId);
+        }
+
+        public static void Delete(Character character)
+        {
+            character.AddDomainEvent(new CharacterDeleted(character));
         }
 
         

@@ -13,7 +13,7 @@ namespace GuildManagerCA.Application.ClassSpecializations.Commands.Delete
     {
         public DeleteSpecializationValidator(ISpecializationRepository specializationRepository)
         {
-            RuleFor(x=>x.id)
+            RuleFor(x=>x.Id)
                 .NotEmpty()
                 .CustomAsync(async (value, context, cancellationToken) =>
                 {

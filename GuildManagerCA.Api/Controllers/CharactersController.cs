@@ -1,8 +1,10 @@
 ﻿using GuildManagerCA.Application.Characters.Commands.Create;
+using GuildManagerCA.Application.Characters.Commands.Delete;
 using GuildManagerCA.Application.Characters.Commands.Update;
 using GuildManagerCA.Application.Characters.Queries;
 using GuildManagerCA.Application.Characters.Queries.GetAllCharacters;
 using GuildManagerCA.Application.Characters.Queries.GetUserCharacters;
+using GuildManagerCA.Application.ClassSpecializations.Commands.Delete;
 using GuildManagerCA.Application.Common.Authentication;
 using GuildManagerCA.Contracts.Characters;
 using GuildManagerCA.Contracts.ClassSpecializations.Create;
@@ -93,6 +95,17 @@ namespace GuildManagerCA.Api.Controllers
                 return Ok(response);
             },
             errors => Problem(errors));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var command = new DeleteCharacterCommand(id);
+            var commandResult = await _sender.Send(command);
+
+            return commandResult.Match(
+                removed => NoContent(),
+                errors => Problem(errors));
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GuildManagerCA.Application.ClassSpecializations.Commands.Delete
 {
-    public record DeleteSpecializationCommand(string id) : IRequest<ErrorOr<bool>>;
+    public record DeleteSpecializationCommand(string Id) : IRequest<ErrorOr<bool>>;
     
     
 }

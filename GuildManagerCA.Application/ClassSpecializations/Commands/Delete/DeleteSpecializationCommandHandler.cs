@@ -21,11 +21,11 @@ namespace GuildManagerCA.Application.ClassSpecializations.Commands.Delete
         }
         public async Task<ErrorOr<bool>> Handle(DeleteSpecializationCommand request, CancellationToken cancellationToken)
         {
-            var specializationId = SpecializationId.Create(request.id);
+            var specializationId = SpecializationId.Create(request.Id);
+
             if (specializationId.IsError)
-            {
                 return Errors.Specialization.InvalidSpecializationId;
-            }
+
             try
             {
                 var specialization = await _specializationRepository.GetByIdAsync(specializationId.Value);
